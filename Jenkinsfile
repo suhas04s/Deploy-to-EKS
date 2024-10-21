@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub') // Jenkins credentials ID for Docker Hub
-        DOCKERHUB_REPO = '8197495215/i18next-app'        // Your Docker Hub repository
+        DOCKERHUB_REPO = 'suhas1996s/i18next-app'        // Your Docker Hub repository
         IMAGE_TAG = 'latest'                             // Image tag
     }
 
@@ -11,10 +11,21 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 echo 'Cloning the repository...'
-                git branch: 'main', url: 'https://github.com/Gowrishankarc/Deploy_to_EKS.git'
+                git branch: 'main', url: 'https://github.com/suhas04s/Deploy-to-EKS.git'
             }
         }
 
+        stage("Create an EC2 instance") {
+            steps {
+                script {
+                    dir('terraform') {
+                        sh "terraform init"
+                        sh "terraform apply -auto-approve"
+                    }
+                }
+            }
+        }
+        
         stage('Build Docker Image') {
             steps {
                 script {
