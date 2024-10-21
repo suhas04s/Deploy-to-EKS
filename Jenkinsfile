@@ -2,9 +2,11 @@ pipeline {
     agent any
 
     environment {
+        AWS_ACCESS_KEY_ID = credentials('aws_access_key_id') // AWS Credentials stored in Jenkins
+        AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
         DOCKERHUB_CREDENTIALS = credentials('dockerhub') // Jenkins credentials ID for Docker Hub
         DOCKERHUB_REPO = 'suhas1996s/i18next-app'        // Your Docker Hub repository
-        IMAGE_TAG = 'latest'                             // Image tag
+        IMAGE_TAG = 'latest'                           // Image tag
     }
 
     stages {
